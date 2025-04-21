@@ -84,9 +84,6 @@ docker-compose up --build
 - `redoc.html` — для опенапи схемы
 - `docker-compose.yml`, `.env`, `README.md`
 ## Инструкция по деплою
-## Для работы с удаленным сервером (на ubuntu):
-* Выполните вход на свой удаленный сервер
-
 * Установите docker на сервер:
 ```
 sudo apt install docker.io 
