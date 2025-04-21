@@ -84,37 +84,54 @@ docker-compose up --build
 - `redoc.html` — для опенапи схемы
 - `docker-compose.yml`, `.env`, `README.md`
 ## Инструкция по деплою
-Для работы с удаленным сервером (на ubuntu):
-Выполните вход на свой удаленный сервер
+## Для работы с удаленным сервером (на ubuntu):
+* Выполните вход на свой удаленный сервер
 
-Установите docker на сервер:
-
+* Установите docker на сервер:
+```
 sudo apt install docker.io 
-Установите docker-compose на сервер:
+```
+* Установите docker-compose на сервер:
+```
 sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
-Локально отредактируйте файл infra/nginx.conf и в строке server_name впишите свой IP
-Скопируйте файлы docker-compose.yml и nginx.conf из директории infra на сервер:
+```
+* Локально отредактируйте файл infra/nginx.conf и в строке server_name впишите свой IP
+* Скопируйте файлы docker-compose.yml и nginx.conf из директории infra на сервер:
+```
 scp docker-compose.yml <username>@<host>:/home/<username>/docker-compose.yml
 scp nginx.conf <username>@<host>:/home/<username>/nginx.conf
-Cоздайте .env файл и впишите:
+```
 
-DB_ENGINE=<django.db.backends.postgresql>
-DB_NAME=<имя базы данных postgres>
-DB_USER=<пользователь бд>
-DB_PASSWORD=<пароль>
-DB_HOST=<db>
-DB_PORT=<5432>
-На сервере соберите docker-compose:
+* Cоздайте .env файл и впишите:
+    ```
+    DB_ENGINE=<django.db.backends.postgresql>
+    DB_NAME=<имя базы данных postgres>
+    DB_USER=<пользователь бд>
+    DB_PASSWORD=<пароль>
+    DB_HOST=<db>
+    DB_PORT=<5432>
+    ```
 
+* На сервере соберите docker-compose:
+```
 sudo docker-compose up -d --build
-После успешной сборки на сервере выполните команды (только после первого деплоя):
-Выполните миграцию:
-sudo docker-compose exec backend python manage.py makemigrations
-Примените миграции:
-sudo docker-compose exec backend python manage.py migrate --noinput
-Соберите статические файлы:
-sudo docker-compose exec backend python manage.py collectstatic --noinput
-Создать суперпользователя Django:
-sudo docker-compose exec backend python manage.py createsuperuser
-Проект будет доступен по вашему IP
+```
+* После успешной сборки на сервере выполните команды (только после первого деплоя):
+    - Выполните миграцию:
+    ```
+    sudo docker-compose exec backend python manage.py makemigrations
+    ```
+    - Примените миграции:
+    ```
+    sudo docker-compose exec backend python manage.py migrate --noinput
+    ```
+    - Соберите статические файлы:
+    ```
+    sudo docker-compose exec backend python manage.py collectstatic --noinput
+    ```
+    - Создать суперпользователя Django:
+    ```
+    sudo docker-compose exec backend python manage.py createsuperuser
+    ```
+    - Проект будет доступен по вашему IP
